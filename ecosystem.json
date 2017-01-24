@@ -2,7 +2,7 @@
   "apps": [
     {
       "name ": "edu-bot",
-      "script": "bin/www",
+      "script": "bin/edu-bot",
       "env": {
         "COMMON_VARIABLE": "true"
       },
