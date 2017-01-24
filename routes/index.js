@@ -9,9 +9,11 @@ router.get('/', function (req, res, next) {
 
 router.get('/unknown/', (req, res, next) => {
   res.setHeader('Content-Type', 'application/json');
+  console.log('Communicating with apiai => ' + req.query.fbId);
   apiAiService.textRequest(req.query.q, {
     sessionId: req.query.fbId
   }, (err, apiaiRes) => {
+    console.log('Got Response: ', JSON.stringify(apiaiRes));
     let message;
     if (err) {
       console.error('Error communicating with apiai', err);
