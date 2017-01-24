@@ -8,29 +8,27 @@ router.get('/', function (req, res, next) {
 });
 
 router.get('/unknown/', (req, res, next) => {
-  res.setHeader('Content-Type', 'application/json');
   console.log('Communicating with apiai => ' + req.query.fbId);
-  apiAiService.textRequest(req.query.q, {
-    sessionId: req.query.fbId
-  }, (err, apiaiRes) => {
+  let apiairequest = apiAiService.textRequest(req.query.q, {sessionId: req.query.fbId});
+  apiairequest.on('response', (apiaiRes) => {
     console.log('Got Response: ', JSON.stringify(apiaiRes));
-    let message;
-    if (err) {
-      console.error('Error communicating with apiai', err);
-      message = {
-        messages: [
-          {text: 'Error Happened! sorry!!!'}
-        ]
-      }
-    } else {
-      message = {
-        messages: [
-          {text: req.query.q + ' => ' + apiaiRes.result.fulfillment.speech}
-        ]
-      }
-    }
-    res.send(JSON.stringify(message));
+    res.setHeader('Content-Type', 'application/json');
+    res.send(JSON.stringify({
+      messages: [
+        {text: req.query.q + ' => ' + apiaiRes.result.fulfillment.speech}
+      ]
+    }));
   });
+  apiairequest.on('error', (err) => {
+    console.error('Error communicating with apiai', err);
+    res.setHeader('Content-Type', 'application/json');
+    res.send(JSON.stringify({
+      messages: [
+        {text: 'Error Happened! sorry!!!'}
+      ]
+    }));
+  });
+  apiairequest.end();
 });
 
 module.exports = router;
