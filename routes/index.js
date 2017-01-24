@@ -9,17 +9,17 @@ router.get('/', function (req, res, next) {
 
 router.get('/unknown/', (req, res, next) => {
   console.log('Communicating with apiai => ' + req.query.fbId);
-  let apiairequest = apiAiService.textRequest(req.query.q, {sessionId: req.query.fbId});
-  apiairequest.on('response', (apiaiRes) => {
+  let apiaiRequest = apiAiService.textRequest(req.query.q, {sessionId: req.query.fbId});
+  apiaiRequest.on('response', (apiaiRes) => {
     console.log('Got Response: ', JSON.stringify(apiaiRes));
     res.setHeader('Content-Type', 'application/json');
     res.send(JSON.stringify({
       messages: [
-        {text: req.query.q + ' => ' + apiaiRes.result.fulfillment.speech}
+        {text: apiaiRes.result.fulfillment.speech}
       ]
     }));
   });
-  apiairequest.on('error', (err) => {
+  apiaiRequest.on('error', (err) => {
     console.error('Error communicating with apiai', err);
     res.setHeader('Content-Type', 'application/json');
     res.send(JSON.stringify({
@@ -28,7 +28,7 @@ router.get('/unknown/', (req, res, next) => {
       ]
     }));
   });
-  apiairequest.end();
+  apiaiRequest.end();
 });
 
 module.exports = router;
