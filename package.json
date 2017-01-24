@@ -1,5 +1,5 @@
 {
-  "name": "educationa-bot",
+  "name": "educational-bot",
   "version": "0.0.0",
   "private": true,
   "scripts": {
@@ -8,8 +8,9 @@
   "repository": {
     "type": "git",
     "url": "git+ssh://git@github.com/AhmedFat7y/robusta-educational-bot.git"
-  }
+  },
   "dependencies": {
+    "apiai": "^3.0.3",
     "body-parser": "~1.15.2",
     "debug": "~2.2.0",
     "express": "~4.14.0",
