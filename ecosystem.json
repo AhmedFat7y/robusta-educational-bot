@@ -19,7 +19,7 @@
       "ref": "origin/master",
       "repo": "git@github.com:AhmedFat7y/robusta-educational-bot.git",
       "path": "/var/www/edu-bot",
-      "post-deploy": "npm install && pm2 startOrRestart ecosystem.json --env production"
+      "post-deploy": "npm install && pm2 startOrRestart ecosystem.json --env production --name edu-bot"
     }
   }
 }
