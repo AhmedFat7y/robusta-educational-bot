@@ -1,0 +1,25 @@
+{
+  "apps": [
+    {
+      "name ": "edu-bot",
+      "script": "bin/www",
+      "env": {
+        "COMMON_VARIABLE": "true"
+      },
+      "env_production": {
+        "NODE_ENV": "production",
+        "PORT": 3002
+      }
+    }
+  ],
+  "deploy": {
+    "production": {
+      "user": "enuma",
+      "host": "46.101.199.209",
+      "ref": "origin/master",
+      "repo": "git@github.com:AhmedFat7y/robusta-educational-bot.git",
+      "path": "/var/www/edu-bot",
+      "post-deploy": "npm install && pm2 startOrRestart ecosystem.json --env production"
+    }
+  }
+}
